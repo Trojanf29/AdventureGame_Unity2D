@@ -1,14 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private float spawnRadius = 5f;
-    [SerializeField] private float minSpawnInterval = 1f; // Thời gian tối thiểu giữa các lần spawn
-    [SerializeField] private float maxSpawnInterval = 3f; // Thời gian tối đa giữa các lần spawn
-    [SerializeField] private float enemyLifetime = 3f;
+    [SerializeField]
+    private GameObject enemyPrefab;
+
+    [SerializeField]
+    private float spawnRadius = 5f;
+
+    [SerializeField]
+    private float minSpawnInterval = 1f;
+
+    [SerializeField]
+    private float maxSpawnInterval = 3f;
+
+    [SerializeField]
+    private float enemyLifetime = 3f;
 
     private void Start()
     {
@@ -19,14 +27,11 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            // Tạo enemy
             Vector3 spawnPosition = GetRandomSpawnPosition();
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
-            // Xóa enemy sau thời gian lifetime
             StartCoroutine(DestroyEnemyAfterDelay(newEnemy, enemyLifetime));
 
-            // Chờ một khoảng thời gian ngẫu nhiên trước khi spawner enemy tiếp theo
             float spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
             yield return new WaitForSeconds(spawnInterval);
         }

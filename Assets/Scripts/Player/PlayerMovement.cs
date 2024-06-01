@@ -35,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2 (dirX * moveSpeed, rb.velocity.y);
+
+        if (transform.rotation.z != 0)
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+
         if (Input.GetButtonDown("Jump") &&  IsGrounded())
         {
             jumpSoundEffect.Play();
@@ -56,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.running;
             sprite.flipX = true;
-
         }
         else
         {

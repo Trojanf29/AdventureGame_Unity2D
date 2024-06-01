@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -430,8 +429,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 658327842}
-        m_TargetAssemblyTypeName: EndMenu, Assembly-CSharp
-        m_MethodName: Quit
+        m_TargetAssemblyTypeName: MenuButton, Assembly-CSharp
+        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -488,7 +487,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 658327836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a23f8ac8d1b5574ab71842df119076e, type: 3}
+  m_Script: {fileID: 11500000, guid: 41783579d2273a14caad3006726bf1c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1087245054
