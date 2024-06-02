@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Scene.unity
     guid: 51de1cee8e7d8724ea113d26d26a63c2
   - enabled: 1
+    path: Assets/Scenes/Waiting Scene.unity
+    guid: 2799fe187620aea46976055f7772a740
+  - enabled: 1
     path: Assets/Scenes/Level 0.unity
     guid: cffc981085595f048a1805f8bc37530f
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level 2.unity
     guid: 8cc1fcaf79b3668469bd0d24e5ed8aa5
   - enabled: 1

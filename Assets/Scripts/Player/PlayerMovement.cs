@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
@@ -34,7 +36,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()   
     {
         dirX = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2 (dirX * moveSpeed, rb.velocity.y);
+        if (rb.bodyType != RigidbodyType2D.Static)
+        {
+            rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        }
 
         if (transform.rotation.z != 0)
             transform.rotation = Quaternion.Euler(0, 0, 0);
