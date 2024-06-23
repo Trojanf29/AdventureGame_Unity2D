@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.StatelessData;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ItemCollector : MonoBehaviour
 {
     private int cherries = 0;
-    [SerializeField]
-    private Text cherriesText;
+    //[SerializeField]
+    //private Text cherriesText;
     [SerializeField]
     private AudioSource collectSoundEffect;
 
@@ -24,7 +25,7 @@ public class ItemCollector : MonoBehaviour
 
             Destroy(collision.gameObject);
             cherries++;
-            cherriesText.text = "Cherries: " + cherries;
+            //cherriesText.text = "Cherries: " + cherries;
         }
     }
 }

@@ -13,7 +13,7 @@ public class GameSessionHandler
 
     static GameSessionHandler()
     {
-        SelectedHero = Constants.Selectable.MaskDude;
+        SelectedHero = Constants.Selectable.VirtualGuy;
         Resource.Import();
 
         Debug.Log("Inited game session");

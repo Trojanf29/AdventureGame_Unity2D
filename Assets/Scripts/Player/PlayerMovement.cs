@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         if (transform.rotation.z != 0)
             transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (Input.GetButtonDown("Jump") &&  IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) &&  IsGrounded())
         {
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
