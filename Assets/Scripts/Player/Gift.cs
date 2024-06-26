@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.StatelessData;
 
 public class Gift : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Gift : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Gift"))
+        if (other.gameObject.CompareTag(Constants.GameObjects.Gift))
         {
             Destroy(other.gameObject);
 

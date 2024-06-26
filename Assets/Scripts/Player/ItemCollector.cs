@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class ItemCollector : MonoBehaviour
 {
     private int cherries = 0;
-    //[SerializeField]
-    //private Text cherriesText;
+
     [SerializeField]
     private AudioSource collectSoundEffect;
 

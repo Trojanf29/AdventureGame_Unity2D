@@ -6,6 +6,7 @@
         {
             public const string Player = "Player";
             public const string Cherry = "Cherry";
+            public const string Gift = "Gift";
         }
 
         public struct Selectable

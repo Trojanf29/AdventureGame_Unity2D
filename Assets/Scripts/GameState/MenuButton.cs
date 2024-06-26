@@ -10,6 +10,11 @@ public class MenuButton : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        GameSessionHandler.QuitGame();
+    }
+
+    public void TogglePauseGame()
+    {
+        LevelHandler.Instance.TogglePauseGame();
     }
 }

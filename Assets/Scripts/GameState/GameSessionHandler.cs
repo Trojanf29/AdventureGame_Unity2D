@@ -1,9 +1,9 @@
 using Assets.Scripts.StatelessData;
 using UnityEngine;
 
-// Used to
-//  - Invoke scripts whenever the first scene is loaded / debugged
-//  - Handle game session
+// Static handler for
+//  - Invoking scripts whenever the first scene is loaded / debugged
+//  - Handling game session
 public class GameSessionHandler
 {
     public static bool ResourceInited;
@@ -19,7 +19,12 @@ public class GameSessionHandler
         Debug.Log("Inited game session");
     }
 
-    public void SaveSession()
+    public static void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public static void SaveSession()
     {
 
     }
