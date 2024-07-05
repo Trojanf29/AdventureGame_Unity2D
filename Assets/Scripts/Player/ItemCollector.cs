@@ -24,7 +24,7 @@ public class ItemCollector : MonoBehaviour
 
             Destroy(collision.gameObject);
             cherries++;
-            //cherriesText.text = "Cherries: " + cherries;
+            LevelHandler.Instance.SetPoint(cherries);
         }
     }
 }

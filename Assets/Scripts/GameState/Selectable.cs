@@ -37,6 +37,7 @@ public class Selectable : MonoBehaviour
         }*/
 
         GameSessionHandler.SelectedHero = name;
+        LevelHandler.ResetLevelHandler();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

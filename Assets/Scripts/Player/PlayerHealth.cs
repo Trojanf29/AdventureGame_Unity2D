@@ -24,11 +24,11 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        currentHealth = startingHealth;
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        currentHealth = startingHealth;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -81,8 +81,15 @@ public class PlayerHealth : MonoBehaviour
         isInvulnerable = false;
     }
 
+    // Animation Event
     private void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Animation Event
+    private void OnDeathAnimationCompleted()
+    {
+        LevelHandler.Instance.ToggleGameOver();
     }
 }
