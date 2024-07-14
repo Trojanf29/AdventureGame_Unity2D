@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce = 14f;
     [SerializeField]
     private AudioSource jumpSoundEffect;
+    private float horizontalInput;
 
     private enum MovementState { idle,running,jumping,falling}
 
@@ -91,5 +92,9 @@ public class PlayerMovement : MonoBehaviour
     {
         playerColor = newColor;
         sprite.color = playerColor;
+    }
+    public bool canAttack()
+    {
+        return horizontalInput == 0 && IsGrounded();
     }
 }

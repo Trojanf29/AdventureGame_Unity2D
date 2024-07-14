@@ -14,6 +14,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     public int startingHealth;
 
+    [SerializeField]
+    public BoxCollider2D BodyCollider;
+
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -33,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Traps"))
+        if (collision.gameObject.CompareTag("Traps") && collision.collider == BodyCollider)
         {
             TakeDamage(1);
         }
