@@ -10,6 +10,8 @@ public class EnemyProjectile : EnemyDamage
 
     private bool hit;
 
+    private const int Damage = 1;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -36,14 +38,20 @@ public class EnemyProjectile : EnemyDamage
 
     private new void OnTriggerEnter2D(Collider2D collision)
     {
-        hit = true;
-        base.OnTriggerEnter2D(collision); //Execute logic from parent script first
-        coll.enabled = false;
+        if (collision.gameObject.name.Equals("Player"))
+        {
+            hit = true;
+            base.OnTriggerEnter2D(collision); //Execute logic from parent script first
+            coll.enabled = false;
 
-        if (anim != null)
-            anim.SetTrigger("Explode"); //When the object is a fireball explode it
-        else
-            gameObject.SetActive(false); //When this hits any object deactivate arrow
+            if (anim != null)
+            {
+                anim.SetTrigger("Explode"); //When the object is a fireball explode it
+                collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+            }
+            else
+                gameObject.SetActive(false); //When this hits any object deactivate arrow
+        }
     }
     private void Deactivate()
     {
