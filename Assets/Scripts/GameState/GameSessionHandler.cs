@@ -19,7 +19,6 @@ public class GameSessionHandler
 
     static GameSessionHandler()
     {
-        Debug.Log("Inited game session");
         Resource.Import();
 
         var savedProfile = LoadSaveFile().CurrentProfile;
@@ -30,7 +29,6 @@ public class GameSessionHandler
         }
         else
         {
-            Debug.Log("Inited point:" + savedProfile.Point);
             CurrentProfile = savedProfile;
         }
     }
@@ -73,8 +71,6 @@ public class GameSessionHandler
         var saveFile = File.Open(Path.Combine(Directory.GetCurrentDirectory(), SAVE_FILE_PATH), FileMode.Create);
         new BinaryFormatter().Serialize(saveFile, saveFileData);
 
-        Debug.Log("Saved Current Profile Point: " + saveFileData.CurrentProfile.Point);
-
         saveFile.Close();
         return saveFileData;
     }
@@ -89,8 +85,6 @@ public class GameSessionHandler
         }
         var formatter = new BinaryFormatter();
         var saveFileData = formatter.Deserialize(saveFile) as SaveFile;
-
-        Debug.Log("Current Profile Point: " + saveFileData.CurrentProfile.Point);
 
         saveFile.Close();
         return saveFileData;
