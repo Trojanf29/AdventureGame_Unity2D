@@ -1,4 +1,6 @@
+using Assets.Scripts.StatelessData;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSprite : MonoBehaviour
 {
@@ -10,7 +12,11 @@ public class PlayerSprite : MonoBehaviour
     {
         var selectedHero = GameSessionHandler.CurrentProfile.SelectedHero;
 
-        if (Resource.AnimatorControllers.ContainsKey(selectedHero))
+        if (SceneManager.GetActiveScene().name.Contains("Boss"))
+        {
+            Anim.runtimeAnimatorController = Resource.AnimatorControllers[Constants.Selectable.Hero];
+        }
+        else if (Resource.AnimatorControllers.ContainsKey(selectedHero))
         {
             Anim.runtimeAnimatorController = Resource.AnimatorControllers[selectedHero];
         }

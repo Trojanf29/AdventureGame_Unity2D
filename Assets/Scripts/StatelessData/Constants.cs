@@ -12,6 +12,8 @@
                 public const string PinkMan = "Player_02";
                 public const string NinjaFrog = "Player_03";
                 public const string MaskDude = "Player_04";
+
+                public const string Hero = "Hero";
             }
         }
 
@@ -28,6 +30,8 @@
             public const string PinkMan = "HeroPinkMan";
             public const string NinjaFrog = "HeroNinjaFrog";
             public const string MaskDude = "HeroMaskDude";
+
+            public const string Hero = "Hero";
         }
 
         public struct ProfileData

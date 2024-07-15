@@ -8,7 +8,7 @@ public class MeeleeEnemy : MonoBehaviour
 
     [Header("Collider Parameters")]
     [SerializeField] private float colliderDistance;
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
 
     [Header("Player Layers")]
     [SerializeField] private LayerMask playerLayer;
@@ -35,15 +35,12 @@ public class MeeleeEnemy : MonoBehaviour
         if (PlayerInSight())
         {
             cooldownTimer += Time.deltaTime;
-            // Attack only when player in sight?
+
             if (cooldownTimer >= attackCooldown && playerHealth.currentHealth > 0)
             {
                 cooldownTimer = 0;
                 anim.SetTrigger("meeleeAttack");
-                //SoundManager.instance.PlaySound(attackSound);
-
             }
-
         }
         if (enemyPatrol != null)
             enemyPatrol.enabled = !PlayerInSight();

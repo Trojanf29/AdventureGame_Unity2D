@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    public int currentHealth { get; private set; }
+    public float currentHealth { get; private set; }
     private bool isInvulnerable;
     //private bool isDead;
 
@@ -39,11 +39,11 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isInvulnerable)
             return;
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, (float)startingHealth);
 
         if (currentHealth > 0)
         {
