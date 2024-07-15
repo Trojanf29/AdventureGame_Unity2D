@@ -8,9 +8,11 @@ public class PlayerSprite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Resource.AnimatorControllers.ContainsKey(GameSessionHandler.SelectedHero))
+        var selectedHero = GameSessionHandler.CurrentProfile.SelectedHero;
+
+        if (Resource.AnimatorControllers.ContainsKey(selectedHero))
         {
-            Anim.runtimeAnimatorController = Resource.AnimatorControllers[GameSessionHandler.SelectedHero];
+            Anim.runtimeAnimatorController = Resource.AnimatorControllers[selectedHero];
         }
     }
 }

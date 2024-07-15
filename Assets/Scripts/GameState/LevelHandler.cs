@@ -1,6 +1,8 @@
+using Assets.Scripts.StatelessData;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // Static handler for
@@ -20,9 +22,9 @@ public class LevelHandler : MonoBehaviour
     private GameObject HighScoreMenu;
 
     public static LevelHandler Instance { get; private set; }
+
     private static bool IsPaused;
     private static bool IsOver;
-    public static int Point { get; private set; }
 
     public LevelHandler()
     {
@@ -30,17 +32,23 @@ public class LevelHandler : MonoBehaviour
         ResetLevelHandler();
     }
 
+    void Start()
+    {
+        Instance.UpdatePoint();
+    }
+
     public static void ResetLevelHandler()
     {
         IsPaused = false;
         IsOver = false;
-        Point = 0;
     }
 
-    public void SetPoint(int point)
+    public void UpdatePoint()
     {
-        Point = point;
-        PointText.text = "Point: " + point.ToString();
+        PointText.text = "Point: " + GameSessionHandler.CurrentProfile.Point.ToString();
+
+        // Save whenever the point changes
+        GameSessionHandler.SaveSession();
     }
 
     public void TogglePauseGame()
@@ -54,19 +62,53 @@ public class LevelHandler : MonoBehaviour
     public void ToggleGameOver()
     {
         IsOver = !IsOver;
+        if (IsOver)
+        {
+            GameSessionHandler.CurrentProfile.GameOver = true;
+            GameSessionHandler.SaveSession();
+        }
+
         GameOverMenu.SetActive(IsOver);
     }
 
     public void SaveHighScore()
     {
-        //var profile = new GameSessionHandler.SaveProfile(string.Empty, Point);
-        //var profiles = GameSessionHandler.SaveSession(profile);
-        var profiles = new List<GameSessionHandler.SaveProfile>
+        // Default profiles
+        var profiles = new List<Profile>
         {
-            new GameSessionHandler.SaveProfile(string.Empty, 100),
-            new GameSessionHandler.SaveProfile(string.Empty, 90),
-            new GameSessionHandler.SaveProfile(string.Empty, 40),
-            new GameSessionHandler.SaveProfile(string.Empty, 50)
+            new Profile(
+                string.Empty,
+                Constants.Selectable.VirtualGuy,
+                SceneManager.GetActiveScene().buildIndex,
+                Constants.ProfileData.DefaultMaxHealth,
+                Constants.ProfileData.DefaultCurrentHealth,
+                70
+            ) { SavedTime = new System.DateTime(2000, 1, 1) },
+            new Profile(
+                string.Empty,
+                Constants.Selectable.VirtualGuy,
+                SceneManager.GetActiveScene().buildIndex,
+                Constants.ProfileData.DefaultMaxHealth,
+                Constants.ProfileData.DefaultCurrentHealth,
+                90
+            ) { SavedTime = new System.DateTime(2001, 1, 1) },
+            new Profile(
+                string.Empty,
+                Constants.Selectable.VirtualGuy,
+                SceneManager.GetActiveScene().buildIndex,
+                Constants.ProfileData.DefaultMaxHealth,
+                Constants.ProfileData.DefaultCurrentHealth,
+                40
+            ) { SavedTime = new System.DateTime(2002, 1, 2) },
+            new Profile(
+                string.Empty,
+                Constants.Selectable.VirtualGuy,
+                SceneManager.GetActiveScene().buildIndex,
+                Constants.ProfileData.DefaultMaxHealth,
+                Constants.ProfileData.DefaultCurrentHealth,
+                50
+            ) { SavedTime = new System.DateTime(2003, 1, 3) },
+            GameSessionHandler.CurrentProfile
         };
 
         var points = profiles.OrderByDescending(_ => _.Point).Select(_ => _.Point).ToList();

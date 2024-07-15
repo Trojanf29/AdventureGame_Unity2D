@@ -1,11 +1,8 @@
 ﻿using Assets.Scripts.StatelessData;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
-    private int cherries = 0;
-
     [SerializeField]
     private AudioSource collectSoundEffect;
 
@@ -23,8 +20,8 @@ public class ItemCollector : MonoBehaviour
             }
 
             Destroy(collision.gameObject);
-            cherries++;
-            LevelHandler.Instance.SetPoint(cherries);
+            GameSessionHandler.CurrentProfile.Point++;
+            LevelHandler.Instance.UpdatePoint();
         }
     }
 }

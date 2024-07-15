@@ -1,10 +1,10 @@
 using Assets.Scripts.StatelessData;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Static handler for
 //  - Invoking scripts whenever the first scene is loaded / debugged
@@ -15,16 +15,24 @@ public class GameSessionHandler
     public const int TOP_PROFILE = 5;
 
     public static bool ResourceInited;
-
-    public static string SelectedHero;
-    public static int CurrentLevel;
+    public static Profile CurrentProfile { get; private set; }
 
     static GameSessionHandler()
     {
-        SelectedHero = Constants.Selectable.VirtualGuy;
+        Debug.Log("Inited game session");
         Resource.Import();
 
-        Debug.Log("Inited game session");
+        var savedProfile = LoadSaveFile().CurrentProfile;
+        if (savedProfile is null || savedProfile.GameOver)
+        {
+            ResetProfile(Constants.Selectable.VirtualGuy);
+            SaveSession();
+        }
+        else
+        {
+            Debug.Log("Inited point:" + savedProfile.Point);
+            CurrentProfile = savedProfile;
+        }
     }
 
     public static void QuitGame()
@@ -32,55 +40,68 @@ public class GameSessionHandler
         Application.Quit();
     }
 
+    public static void ResetProfile(string selectedHero)
+    {
+        //
+        CurrentProfile = new Profile(
+            string.Empty,
+            selectedHero,
+            SceneManager.GetActiveScene().buildIndex,
+            Constants.ProfileData.DefaultMaxHealth,
+            Constants.ProfileData.DefaultCurrentHealth,
+            0
+        );
+    }
+
     public static bool IsAbleToSaveSession(int point)
     {
         var saveFile = File.Open(Path.Combine(Directory.GetCurrentDirectory(), SAVE_FILE_PATH), FileMode.OpenOrCreate);
         var formatter = new BinaryFormatter();
-        var profiles = formatter.Deserialize(saveFile) as List<SaveProfile>;
+        var profiles = formatter.Deserialize(saveFile) as List<Profile>;
 
         bool isAbleToSave = profiles.Any(_ => _.Point < point);
         saveFile.Close();
         return isAbleToSave;
     }
 
-    public static List<SaveProfile> SaveSession(SaveProfile newProfile)
+    public static SaveFile SaveSession()
     {
-        var saveFile = File.Open(Path.Combine(Directory.GetCurrentDirectory(), SAVE_FILE_PATH), FileMode.OpenOrCreate);
-        var formatter = new BinaryFormatter();
-        var profiles = formatter.Deserialize(saveFile) as List<SaveProfile>;
+        var saveFileData = LoadSaveFile();
+        TryAddProfileByHighScore(saveFileData.HighScoreProfiles, TOP_PROFILE, CurrentProfile);
+        saveFileData.CurrentProfile = CurrentProfile;
 
-        var isAdded = AddProfileByHighScore(profiles, TOP_PROFILE, newProfile);
-        if (isAdded)
-        {
-            formatter.Serialize(saveFile, profiles);
-        }
+        var saveFile = File.Open(Path.Combine(Directory.GetCurrentDirectory(), SAVE_FILE_PATH), FileMode.Create);
+        new BinaryFormatter().Serialize(saveFile, saveFileData);
+
+        Debug.Log("Saved Current Profile Point: " + saveFileData.CurrentProfile.Point);
 
         saveFile.Close();
-        return profiles;
+        return saveFileData;
     }
 
-
-
-
-
-
-    public class SaveProfile
+    public static SaveFile LoadSaveFile()
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Point { get; set; }
-        public DateTime SavedTime { get; set; }
-
-        public SaveProfile(string name, int point)
+        var saveFile = File.Open(Path.Combine(Directory.GetCurrentDirectory(), SAVE_FILE_PATH), FileMode.OpenOrCreate);
+        if (saveFile.Length == 0)
         {
-            Id = Guid.NewGuid();
-            Name = name;
-            Point = point;
-            SavedTime = DateTime.UtcNow;
+            saveFile.Close();
+            return new SaveFile();
         }
+        var formatter = new BinaryFormatter();
+        var saveFileData = formatter.Deserialize(saveFile) as SaveFile;
+
+        Debug.Log("Current Profile Point: " + saveFileData.CurrentProfile.Point);
+
+        saveFile.Close();
+        return saveFileData;
     }
 
-    private static bool AddProfileByHighScore(List<SaveProfile> profiles, int topProfile, SaveProfile newProfile)
+
+
+
+
+
+    private static bool TryAddProfileByHighScore(List<Profile> profiles, int topProfile, Profile newProfile)
     {
         if (profiles.Count < topProfile)
         {

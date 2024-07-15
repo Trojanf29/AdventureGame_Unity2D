@@ -2,6 +2,19 @@
 {
     internal class Constants
     {
+        public struct Path
+        {
+            public const string Animator_Player = "Animation/Player/";
+
+            public struct Animators
+            {
+                public const string VirtualGuy = "Player_01";
+                public const string PinkMan = "Player_02";
+                public const string NinjaFrog = "Player_03";
+                public const string MaskDude = "Player_04";
+            }
+        }
+
         public struct GameObjects
         {
             public const string Player = "Player";
@@ -17,17 +30,10 @@
             public const string MaskDude = "HeroMaskDude";
         }
 
-        public struct Path
+        public struct ProfileData
         {
-            public const string Animator_Player = "Animation/Player/";
-
-            public struct Animators
-            {
-                public const string VirtualGuy = "Player_01";
-                public const string PinkMan = "Player_02";
-                public const string NinjaFrog = "Player_03";
-                public const string MaskDude = "Player_04";
-            }
+            public const int DefaultMaxHealth = 3;
+            public const int DefaultCurrentHealth = 3;
         }
     }
 }
