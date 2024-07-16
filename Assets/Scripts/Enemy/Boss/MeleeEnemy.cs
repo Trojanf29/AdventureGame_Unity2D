@@ -55,14 +55,10 @@ public class MeeleeEnemy : MonoBehaviour
 
         if (hit.collider != null)
             playerHealth = hit.transform.GetComponent<PlayerHealth>();
+        else
+            playerHealth = null;
 
-        return hit.collider != null;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+        return hit.collider != null && playerHealth != null;
     }
 
     private void DamagePlayer()

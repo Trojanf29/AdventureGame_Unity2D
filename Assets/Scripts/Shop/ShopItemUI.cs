@@ -1,35 +1,43 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.Scripts.StatelessData.Enums;
 
 public class ShopItemUI : MonoBehaviour
 {
-    public Text priceText;
-    public Image hud;
-    public Button btn;
+    public ShopItem Item;
+    private const int Price = 1;
 
-    public void UpdateUI(ShopItem item, int shopItemId)
+    private void Start()
     {
-        if (item == null) return;
+        GetComponent<Button>().onClick.AddListener(() => {
+            OnItemClick();
+        });
+    }
 
-        if (hud) hud.sprite = item.hud;
+    public void OnItemClick()
+    {
+        bool isPurchased = false;
 
-        bool isUnlocked = Pref.GetBool(PrefConst.PLAYER_PEFIX + shopItemId);
-
-        if (isUnlocked)
+        if (GameSessionHandler.CurrentProfile.Point >= Price)
         {
-            if (shopItemId == Pref.CurPlayId) {
-                if (priceText)
-                    priceText.text = "Active";
-            }
-            else
+            if (Item == ShopItem.Health)
             {
-                if (priceText)
-                    priceText.text = "OWNED";
+                var player = FindObjectOfType<PlayerHealth>();
+                if (player != null && player.currentHealth < player.startingHealth)
+                {
+                    player.IncreaseHealth(1);
+                }
+                isPurchased = true;
             }
-        } else
-        {
-            if (priceText)
-                priceText.text = item.price.ToString();
         }
+
+        if (isPurchased)
+        {
+            GameSessionHandler.CurrentProfile.Point -= Price;
+            LevelHandler.Instance.UpdatePoint();
+            GameSessionHandler.SaveSession();
+        }
+
+        Debug.Log(isPurchased ? "Item purchased" : "Cannot purchase this item");
     }
 }

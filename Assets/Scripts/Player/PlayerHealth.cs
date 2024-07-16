@@ -47,7 +47,6 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            //anim.SetTrigger("hurt");
             hurtSoundEffect.Play();
 
             // Become invunerability for a time
@@ -55,14 +54,9 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            /*if (!isDead)
-            {*/
-                rb.bodyType = RigidbodyType2D.Static;
-                //isDead = true;
-
-                anim.SetTrigger("death");
-                deathSoundEffect.Play();
-            //}
+            rb.bodyType = RigidbodyType2D.Static;
+            anim.SetTrigger("death");
+            deathSoundEffect.Play();
         }
     }
 
@@ -91,5 +85,11 @@ public class PlayerHealth : MonoBehaviour
     private void OnDeathAnimationCompleted()
     {
         LevelHandler.Instance.ToggleGameOver();
+    }
+
+    public void IncreaseHealth(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
     }
 }

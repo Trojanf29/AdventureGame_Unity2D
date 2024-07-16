@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    public List<ShopItem> shopItems; // Danh sách các mặt hàng shop
     public Transform shopContent; // Transform chứa các item UI
     public GameObject shopItemPrefab; // Prefab của ShopItemUI
 
@@ -20,14 +18,7 @@ public class ShopManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Khởi tạo các mặt hàng mới
-        for (int i = 0; i < shopItems.Count; i++)
-        {
-            ShopItem item = shopItems[i];
-            GameObject shopItemUIObject = Instantiate(shopItemPrefab, shopContent);
-            //ShopItemUI shopItemUI = shopItemUIObject.GetComponent<ShopItemUI>();
-            //shopItemUI.UpdateUI(item, i); // Sử dụng chỉ số i thay cho ID
-        }
+        Instantiate(shopItemPrefab, shopContent);
     }
 
     public void ShowShopDialog()
