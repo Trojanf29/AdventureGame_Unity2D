@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
 
     private float dirX = 0f;
-    private float horizontalInput;
     private Color playerColor;
 
     [SerializeField]
@@ -20,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private AudioSource jumpSoundEffect;
 
-    private enum MovementState { idle, running, jumping, falling}
+    private enum MovementState { idle,running,jumping,falling}
 
     // Start is called before the first frame update
     private void Start()
@@ -92,10 +91,5 @@ public class PlayerMovement : MonoBehaviour
     {
         playerColor = newColor;
         sprite.color = playerColor;
-    }
-
-    public bool canAttack()
-    {
-        return horizontalInput == 0 && IsGrounded();
     }
 }

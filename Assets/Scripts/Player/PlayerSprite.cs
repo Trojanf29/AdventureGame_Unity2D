@@ -1,6 +1,4 @@
-using Assets.Scripts.StatelessData;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerSprite : MonoBehaviour
 {
@@ -10,15 +8,9 @@ public class PlayerSprite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var selectedHero = GameSessionHandler.CurrentProfile.SelectedHero;
-
-        if (SceneManager.GetActiveScene().name.Contains("Boss"))
+        if (Resource.AnimatorControllers.ContainsKey(GameSessionHandler.SelectedHero))
         {
-            Anim.runtimeAnimatorController = Resource.AnimatorControllers[Constants.Selectable.Hero];
-        }
-        else if (Resource.AnimatorControllers.ContainsKey(selectedHero))
-        {
-            Anim.runtimeAnimatorController = Resource.AnimatorControllers[selectedHero];
+            Anim.runtimeAnimatorController = Resource.AnimatorControllers[GameSessionHandler.SelectedHero];
         }
     }
 }

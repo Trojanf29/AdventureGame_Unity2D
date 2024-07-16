@@ -17,14 +17,4 @@ public class MenuButton : MonoBehaviour
     {
         LevelHandler.Instance.TogglePauseGame();
     }
-
-    public void SaveHighScore()
-    {
-        LevelHandler.Instance.SaveHighScore();
-    }
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
 }

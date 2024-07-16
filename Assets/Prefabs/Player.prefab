@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 796670005547948478}
   - component: {fileID: 501194206088414793}
   - component: {fileID: 4209004104629270963}
-  - component: {fileID: 8973098148302041799}
+  - component: {fileID: 3123373475406571100}
   - component: {fileID: 6307496815979447524}
   - component: {fileID: 6337442563549523459}
   - component: {fileID: 6368897778418523423}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectSoundEffect: {fileID: 5955580304370609050}
---- !u!114 &8973098148302041799
+--- !u!114 &3123373475406571100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5355578126439250003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a3337013846bcd45b39f1303e7b8527, type: 3}
+  m_Script: {fileID: 11500000, guid: fcd14a7dbfb11434797607221041aa9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hurtSoundEffect: {fileID: 8037831100187639086}

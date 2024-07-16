@@ -19,9 +19,7 @@ public class Resource : MonoBehaviour
             { Constants.Selectable.VirtualGuy, Constants.Path.Animators.VirtualGuy },
             { Constants.Selectable.PinkMan, Constants.Path.Animators.PinkMan },
             { Constants.Selectable.NinjaFrog, Constants.Path.Animators.NinjaFrog },
-            { Constants.Selectable.MaskDude, Constants.Path.Animators.MaskDude },
-
-            { Constants.Selectable.Hero, Constants.Path.Animators.Hero }
+            { Constants.Selectable.MaskDude, Constants.Path.Animators.MaskDude }
         };
 
         foreach (var item in controller_path)

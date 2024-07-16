@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,18 +17,17 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    public float currentHealth { get; private set; }
+    public int currentHealth { get; private set; }
     private bool isInvulnerable;
-    //private bool isDead;
 
-    // Start is called before the first frame update
     private void Start()
     {
-        currentHealth = startingHealth;
-
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        currentHealth = startingHealth;
+        UpdateHealthUI();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -39,30 +38,22 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    private void TakeDamage(int damage)
     {
         if (isInvulnerable)
             return;
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, (float)startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, startingHealth);
 
         if (currentHealth > 0)
         {
-            //anim.SetTrigger("hurt");
             hurtSoundEffect.Play();
-
-            // Become invunerability for a time
             StartCoroutine(Invunerability());
         }
         else
         {
-            /*if (!isDead)
-            {*/
-                rb.bodyType = RigidbodyType2D.Static;
-                //isDead = true;
-
-                anim.SetTrigger("death");
-                deathSoundEffect.Play();
-            //}
+            rb.bodyType = RigidbodyType2D.Static;
+            anim.SetTrigger("death");
+            deathSoundEffect.Play();
         }
     }
 
@@ -81,15 +72,16 @@ public class PlayerHealth : MonoBehaviour
         isInvulnerable = false;
     }
 
-    // Animation Event
-    private void RestartLevel()
+    public void IncreaseHealth(int amount)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
+        UpdateHealthUI();
     }
 
-    // Animation Event
-    private void OnDeathAnimationCompleted()
+    public void UpdateHealthUI()
     {
-        LevelHandler.Instance.ToggleGameOver();
+        // Cập nhật giao diện hiển thị máu của nhân vật (nếu có)
     }
 }
+

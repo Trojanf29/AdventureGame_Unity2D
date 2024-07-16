@@ -1,10 +1,23 @@
 ﻿using Assets.Scripts.StatelessData;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
+    private int score = 0;
+    private int cherries = 0;
+
     [SerializeField]
     private AudioSource collectSoundEffect;
+    [SerializeField]
+    public Text scoreText;
+
+    private void Start()
+    {
+        
+        score = Pref.Score;
+        UpdateScoreText();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,8 +33,16 @@ public class ItemCollector : MonoBehaviour
             }
 
             Destroy(collision.gameObject);
-            GameSessionHandler.CurrentProfile.Point++;
-            LevelHandler.Instance.UpdatePoint();
+            cherries++;
+            score++;
+            
+            Pref.Score = score;
+            UpdateScoreText();
         }
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + score;
     }
 }
